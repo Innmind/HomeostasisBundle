@@ -1,0 +1,26 @@
+services:
+    innmind.homeostasis.state_history:
+        class: Innmind\Homeostasis\StateHistory\Filesystem
+        # public: false
+        arguments:
+            - '@innmind.homeostasis.state_history.filesystem'
+            - '@innmind.homeostasis.clock'
+
+    innmind.homeostasis.state_history.filesystem:
+        class: Innmind\Filesystem\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - '%kernel.root_dir%/../var/data/innmind/homeostasis/states'
+
+    innmind.homeostasis.action_history:
+        class: Innmind\Homeostasis\ActionHistory\Filesystem
+        public: false
+        arguments:
+            - '@innmind.homeostasis.action_history.filesystem'
+            - '@innmind.homeostasis.clock'
+
+    innmind.homeostasis.action_history.filesystem:
+        class: Innmind\Filesystem\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - '%kernel.root_dir%/../var/data/innmind/homeostasis/actions'
