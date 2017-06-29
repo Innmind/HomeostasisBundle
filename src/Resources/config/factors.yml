@@ -1,0 +1,62 @@
+services:
+    innmind.homeostasis.factor.cpu:
+        class: Innmind\Homeostasis\Factor\Cpu
+        public: false
+        factory:
+            - '@innmind.homeostasis.factor.cpu.factory'
+            - 'make'
+        arguments:
+            - '@innmind.homeostasis.clock'
+            - '@innmind.homeostasis.server_status'
+        tags:
+            - {name: innmind.homeostasis.factor, alias: cpu}
+
+    innmind.homeostasis.factor.cpu.factory:
+        class: Innmind\HomeostasisBundle\Factory\Factor\CpuFactory
+        public: false
+
+    innmind.homeostasis.factor.log:
+        class: Innmind\Homeostasis\Factor\Log
+        public: false
+        factory:
+            - '@innmind.homeostasis.factor.log.factory'
+            - 'make'
+        arguments:
+            - '@innmind.homeostasis.clock'
+            - '@innmind.homeostasis.factor.log.reader'
+            - '@innmind.homeostasis.factor.log.directory'
+            - '@innmind.homeostasis.factor.log.watcher'
+            - 'symfony'
+        tags:
+            - {name: innmind.homeostasis.factor, alias: log}
+
+    innmind.homeostasis.factor.log.factory:
+        class: Innmind\HomeostasisBundle\Factory\Factor\LogFactory
+        public: false
+
+    innmind.homeostasis.factor.log.reader:
+        class: Innmind\LogReader\Reader\Synchronous
+        public: false
+        arguments:
+            - '@innmind.homeostasis.factor.log.parser'
+
+    innmind.homeostasis.factor.log.parser:
+        class: Innmind\LogReader\Reader\LineParser\Symfony
+        public: false
+        arguments:
+            - '@innmind.homeostasis.clock'
+
+    innmind.homeostasis.factor.log.directory:
+        class: Innmind\Filesystem\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - '%kernel.logs_dir%'
+
+    innmind.homeostasis.factor.log.watcher:
+        class: Innmind\HomeostasisBundle\Log\Watcher
+        public: false
+        arguments:
+            - 'emergency'
+            - 'alert'
+            - 'critical'
+            - 'error'

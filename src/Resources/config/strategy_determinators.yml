@@ -1,0 +1,9 @@
+services:
+    innmind.homeostasis.strategy_determinator: '@innmind.homeostasis.strategy_determinator.default'
+
+    innmind.homeostasis.strategy_determinator.default:
+        class: Innmind\Homeostasis\Actuator\StrategyDeterminator
+        public: false
+        factory:
+            - 'Innmind\Homeostasis\Actuator\StrategyDeterminators'
+            - 'default'

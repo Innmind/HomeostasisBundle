@@ -1,0 +1,50 @@
+services:
+    innmind.homeostasis.regulator: '@innmind.homeostasis.regulator.default'
+
+    innmind.homeostasis.regulator.default:
+        class: Innmind\Homeostasis\Regulator\Regulator
+        public: false
+        factory:
+            - 'Innmind\HomeostasisBundle\Factory\Regulator\RegulatorFactory'
+            - 'make'
+        arguments:
+            - []
+            - '@innmind.homeostasis.state_history'
+            - '@innmind.homeostasis.clock'
+            - '@innmind.homeostasis.strategy_determinator'
+            - ~
+        tags:
+            - {name: innmind.homeostasis.regulator, alias: default}
+
+    innmind.homeostasis.regulator.modulate_state_history:
+        class: Innmind\Homeostasis\Regulator\ModulateStateHistory
+        public: false
+        arguments:
+            - ~
+            - '@innmind.homeostasis.action_history'
+            - '@innmind.homeostasis.state_history'
+            - '@innmind.homeostasis.clock'
+            - '@innmind.homeostasis.regulator.modulate_state_history.max_history'
+            - '@innmind.homeostasis.regulator.modulate_state_history.min_history'
+        tags:
+            - {name: innmind.homeostasis.regulator, alias: modulate_state_history}
+
+    innmind.homeostasis.regulator.thread_safe:
+        class: Innmind\Homeostasis\Regulator\ThreadSafe
+        public: false
+        arguments:
+            - ~
+        tags:
+            - {name: innmind.homeostasis.regulator, alias: thread_safe}
+
+    innmind.homeostasis.regulator.modulate_state_history.max_history:
+        class: Innmind\TimeContinuum\ElapsedPeriod
+        public: false
+        arguments:
+            - ~
+
+    innmind.homeostasis.regulator.modulate_state_history.min_history:
+        class: Innmind\TimeContinuum\ElapsedPeriod
+        public: false
+        arguments:
+            - ~

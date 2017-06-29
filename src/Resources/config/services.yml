@@ -1,0 +1,23 @@
+imports:
+    - {resource: 'factors.yml'}
+    - {resource: 'histories.yml'}
+    - {resource: 'strategy_determinators.yml'}
+    - {resource: 'regulators.yml'}
+
+services:
+    innmind.homeostasis.clock:
+        class: Innmind\TimeContinuum\TimeContinuum\Earth
+        public: false
+
+    innmind.homeostasis.server_status:
+        class: Innmind\Server\Status\Server
+        public: false
+        factory:
+            - '@innmind.homeostasis.server_status.factory'
+            - 'make'
+
+    innmind.homeostasis.server_status.factory:
+        class: Innmind\Server\Status\ServerFactory
+        public: false
+        arguments:
+            - '@innmind.homeostasis.clock'
