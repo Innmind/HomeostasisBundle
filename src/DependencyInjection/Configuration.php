@@ -62,6 +62,7 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('actuator')
                     ->info('Service id of the actuator')
+                    ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('state_history')
                     ->defaultValue('%kernel.root_dir%/../var/data/innmind/homeostasis/states')
