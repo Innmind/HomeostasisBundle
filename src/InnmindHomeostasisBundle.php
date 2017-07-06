@@ -5,7 +5,8 @@ namespace Innmind\HomeostasisBundle;
 
 use Innmind\HomeostasisBundle\DependencyInjection\Compiler\{
     ConfigureFactorsPass,
-    BuildRegulatorStackPass
+    BuildRegulatorStackPass,
+    RegisterFactorsPass
 };
 use Symfony\Component\{
     HttpKernel\Bundle\Bundle,
@@ -21,6 +22,7 @@ final class InnmindHomeostasisBundle extends Bundle
     {
         $container
             ->addCompilerPass(new ConfigureFactorsPass)
-            ->addCompilerPass(new BuildRegulatorStackPass);
+            ->addCompilerPass(new BuildRegulatorStackPass)
+            ->addCompilerPass(new RegisterFactorsPass);
     }
 }
