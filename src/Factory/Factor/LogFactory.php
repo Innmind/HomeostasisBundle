@@ -15,7 +15,7 @@ use Innmind\Math\{
 };
 use Innmind\TimeContinuum\TimeContinuumInterface;
 use Innmind\LogReader\Reader;
-use Innmind\Filesystem\AdapterInterface;
+use Innmind\Filesystem\Adapter;
 
 final class LogFactory
 {
@@ -51,7 +51,7 @@ final class LogFactory
     public function make(
         TimeContinuumInterface $clock,
         Reader $reader,
-        AdapterInterface $directory,
+        Adapter $directory,
         callable $watcher,
         string $name
     ): Log {

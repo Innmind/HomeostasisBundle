@@ -7,7 +7,7 @@ use Innmind\HomeostasisBundle\Factory\Factor\LogFactory;
 use Innmind\Homeostasis\Factor\Log;
 use Innmind\TimeContinuum\TimeContinuumInterface;
 use Innmind\LogReader\Reader;
-use Innmind\Filesystem\AdapterInterface;
+use Innmind\Filesystem\Adapter;
 use PHPUnit\Framework\TestCase;
 
 class LogFactoryTest extends TestCase
@@ -25,7 +25,7 @@ class LogFactoryTest extends TestCase
         $factor = $factory->make(
             $this->createMock(TimeContinuumInterface::class),
             $this->createMock(Reader::class),
-            $this->createMock(AdapterInterface::class),
+            $this->createMock(Adapter::class),
             function(){},
             'foo'
         );
